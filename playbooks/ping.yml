@@ -1,0 +1,5 @@
+- name: Checking if hosts are up
+  hosts: all
+  tasks:
+    - name: Pinging hosts
+      action: ping
