@@ -12,6 +12,9 @@
 
 # Commands
 
+## Check
+Dry run any playbook with the `--check` flag for example `ansible-playbook playbooks/secure.yml --check`
+
 ## Display inventory
 `ansible-inventory --list`
 
@@ -24,13 +27,21 @@
 
 `ansible -m ping webservers -i inventory.yml` or `ansible -m ping webservers`
 
-### Playbook
+## Playbook
 Ping hosts via playbook `ansible-playbook playbooks/main.yml`
 
+### Secure the Raspberry pi
+Run this as the first playbook as this is meant to secure the Raspberry pi by setting up an SSH based authentication and disable the password based authentication. Once this run successfully you do not need to run this again, unless you are adding another host in inventory.
+```
+ansible-playbook playbooks/secure.yml --ask-pass
+```
+
 ### ToDo
+- [ ] Find out how to manage dependencies `ansible-galaxy`
+- Secureing Raspberry pi
+  - [*] Add SSH key to the PI
+  - [*] Disable password based login
 - [ ] Use template
-  - For securing PI
-    - [ ] Disable password based login
   - For setting hostnames
     - [ ] Webserver
     - [ ] Database
