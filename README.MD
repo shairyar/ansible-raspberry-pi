@@ -39,8 +39,8 @@ ansible-playbook playbooks/secure.yml --ask-pass
 ### ToDo
 - [ ] Find out how to manage dependencies `ansible-galaxy`
 - Secureing Raspberry pi
-  - [*] Add SSH key to the PI
-  - [*] Disable password based login
+  - [x] Add SSH key to the PI
+  - [x] Disable password based login
 - [ ] Use template
   - For setting hostnames
     - [ ] Webserver
