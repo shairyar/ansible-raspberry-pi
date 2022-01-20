@@ -46,3 +46,4 @@ ansible-playbook playbooks/secure.yml --ask-pass
     - [ ] Webserver
     - [ ] Database
     - [ ] Redis
+- [ ] Implement collections
