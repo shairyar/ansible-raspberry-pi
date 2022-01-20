@@ -2,7 +2,8 @@
   become: yes
   vars:
     server_name: "{{ ansible_default_ipv4.address }}"
-    document_root: /home/www/html_demo_site
+    document_root: /home/www/
+    app_root: html_demo_site
   tasks:
     - name: Update apt cache and install Nginx
       apt:
@@ -12,13 +13,13 @@
 
     - name: Copy website files to the server's document root
       copy:
-        src: /Users/shairyar/raspberryPi/html_demo_site-main
+        src: /Users/shairyar/raspberryPi/html_demo_site
         dest: "{{ document_root }}"
         mode: preserve
 
     - name: Apply Nginx template
       template:
-        src: files/nginx.conf.j2
+        src: /Users/shairyar/raspberryPi/ansible-raspberrypi/files/nginx.conf.j2
         dest: /etc/nginx/sites-available/default
       notify: Restart Nginx
 
