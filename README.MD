@@ -36,6 +36,8 @@ Run this as the first playbook as this is meant to secure the Raspberry pi by se
 ansible-playbook playbooks/secure.yml --ask-pass
 ```
 
+`--ask-pass` will ask for a password, enter the password of a system you are SSHing into.
+
 ### ToDo
 - [ ] Find out how to manage dependencies `ansible-galaxy`
 - Secureing Raspberry pi
