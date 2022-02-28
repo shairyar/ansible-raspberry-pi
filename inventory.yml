@@ -8,6 +8,9 @@ all:
         pi2:
           ansible_host: 192.168.100.118
           ansible_user: ubuntu
+        pi3:
+          ansible_host: 192.168.100.119
+          ansible_user: ubuntu
         # pi2:
         #   ansible_host: 192.168.100.54
         #   ansible_user: ubuntu
