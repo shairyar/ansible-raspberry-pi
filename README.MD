@@ -38,6 +38,14 @@ ansible-playbook playbooks/secure.yml --ask-pass
 
 `--ask-pass` will ask for a password, enter the password of a system you are SSHing into.
 
+## Shutdown
+
+To shutdown all hosts
+
+```
+ansible-playbook playbooks/shutdown.yml
+```
+
 ### ToDo
 - [ ] Find out how to manage dependencies `ansible-galaxy`
 - Secureing Raspberry pi
@@ -49,3 +57,4 @@ ansible-playbook playbooks/secure.yml --ask-pass
     - [ ] Database
     - [ ] Redis
 - [ ] Implement collections
+- [ ] Shutdown specific host
