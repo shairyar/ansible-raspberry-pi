@@ -1,0 +1,13 @@
+- hosts: all
+  become: yes
+  tasks:
+    - name: Add deploy user
+      user:
+        name: deploy
+        shell: /bin/bash
+    # You need sshpass installed for this to work as it will prompt for a password
+    - name: Add SSH key to server for deploy user
+      ansible.posix.authorized_key:
+        user: deploy
+        state: present
+        key: "{{ lookup('file', lookup('env','HOME') + '/.ssh/id_rsa.pub') }}"
