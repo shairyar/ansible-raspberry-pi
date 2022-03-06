@@ -28,22 +28,38 @@ Dry run any playbook with the `--check` flag for example `ansible-playbook playb
 `ansible -m ping webservers -i inventory.yml` or `ansible -m ping webservers`
 
 ## Playbook
-Ping hosts via playbook `ansible-playbook playbooks/main.yml`
+<!-- Ping hosts via playbook `ansible-playbook playbooks/main.yml` -->
 
 ### Secure the Raspberry pi
 Run this as the first playbook as this is meant to secure the Raspberry pi by setting up an SSH based authentication and disable the password based authentication. Once this run successfully you do not need to run this again, unless you are adding another host in inventory.
 ```
-ansible-playbook playbooks/secure.yml --ask-pass
+ansible-playbook playbooks/secure/run.yml --ask-pass
 ```
 
 `--ask-pass` will ask for a password, enter the password of a system you are SSHing into.
+
+### Dependencies
+
+#### User
+Create a user that will do deployment
+```
+playbooks/dependencies/user/deploy.yml
+```
+
+## Update
+
+To update all hosts
+
+```
+ansible-playbook playbooks/update/run.yml
+```
 
 ## Shutdown
 
 To shutdown all hosts
 
 ```
-ansible-playbook playbooks/shutdown.yml
+ansible-playbook playbooks/shutdown/run.yml
 ```
 
 ### ToDo
@@ -58,3 +74,6 @@ ansible-playbook playbooks/shutdown.yml
     - [ ] Redis
 - [ ] Implement collections
 - [ ] Shutdown specific host
+- [ ] Deployment
+  - [x] Deploy user
+  - [ ] Dependencies
