@@ -5,7 +5,6 @@
       user:
         name: deploy
         shell: /bin/bash
-        # group: sudo
     # You need sshpass installed for this to work as it will prompt for a password
     - name: Add SSH key to server for deploy user
       ansible.posix.authorized_key:

@@ -13,8 +13,6 @@
       lineinfile: dest=/etc/ssh/sshd_config regexp="^PasswordAuthentication" line="PasswordAuthentication no" state=present
       notify:
         - restart sshd
+
   handlers:
-  - name: restart sshd
-    service:
-      name: sshd
-      state: restarted
+      - include: shared/handlers/main.yml

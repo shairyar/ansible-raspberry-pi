@@ -1,7 +1,5 @@
 - hosts: all
   become: yes
-  vars_files:
-    - ../../etc/ansible/vars.yml
   tasks:
     - name: Install Ruby dependencies
       apt:
@@ -25,58 +23,6 @@
         - libpq-dev
       notify:
         - Enable Postgresql
-    - name: Ensure PostgreSQL is listening on *
-      lineinfile:
-        dest: /etc/postgresql/13/main/postgresql.conf
-        regexp: '^listen_addresses\s*='
-        line: "listen_addresses='*'"
-        state: present
-      notify: Restart Postgresql
 
-    - name: Add new configuration to "pg_hba.conf"
-      blockinfile:
-        dest: /etc/postgresql/13/main/pg_hba.conf
-        block: |
-          host    all             all             0.0.0.0/0                md5
-          host    all             all             ::/0                     md5
-      notify: Restart Postgresql
-
-    - name: Change peer identification to trust
-      shell: /bin/sed -i '/^local/s/peer/trust/' /etc/postgresql/13/main/pg_hba.conf
-      args:
-        warn: no
-      notify: Restart Postgresql
-    - name: Create a Superuser PostgreSQL database user
-      become_user: postgres
-      postgresql_user:
-        name: '{{ db_user }}'
-        password: '{{ db_password }}'
-        role_attr_flags: CREATEDB,SUPERUSER,CREATEROLE
-        encrypted: yes
-        state: present
-    - name: "Create app database"
-      postgresql_db:
-        state: present
-        name: "{{ db_staging_name }}"
-      become: yes
-      become_user: postgres
   handlers:
-    - name: Restart Postgresql
-      systemd:
-        name: postgresql
-        state: restarted
-
-    - name: Start Postgresql
-      systemd:
-        name: postgresql
-        state: started
-
-    - name: Stop Postgresql
-      systemd:
-        name: postgresql
-        state: stopped
-
-    - name: Enable Postgresql
-      systemd:
-        name: postgresql
-        enabled: yes
+      - include: ../shared/handlers/main.yml
