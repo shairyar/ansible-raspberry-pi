@@ -12,13 +12,13 @@
 
 # Commands
 
-## Check
+## Ping
+`ansible -m ping all`
+## Dry run
 Dry run any playbook with the `--check` flag for example `ansible-playbook playbooks/secure.yml --check`
 
 ## Display inventory
 `ansible-inventory --list`
-
-## Pinging
 
 ### All hosts
 `ansible -m ping all -i inventory.yml` or `ansible -m ping all`
@@ -27,13 +27,12 @@ Dry run any playbook with the `--check` flag for example `ansible-playbook playb
 
 `ansible -m ping webservers -i inventory.yml` or `ansible -m ping webservers`
 
-## Playbook
-<!-- Ping hosts via playbook `ansible-playbook playbooks/main.yml` -->
+## Playbooks
 
 ### Secure the Raspberry pi
-Run this as the first playbook as this is meant to secure the Raspberry pi by setting up an SSH based authentication and disable the password based authentication. Once this run successfully you do not need to run this again, unless you are adding another host in inventory.
+Run this as the first playbook as this is meant to secure the Ubuntu serer by setting up an SSH based authentication and disable the password based authentication. Once this run successfully you do not need to run this again, unless you are adding another host in inventory.
 ```
-ansible-playbook playbooks/secure/run.yml --ask-pass
+ansible-playbook playbooks/secure.yml --check --ask-pass
 ```
 
 `--ask-pass` will ask for a password, enter the password of a system you are SSHing into.
