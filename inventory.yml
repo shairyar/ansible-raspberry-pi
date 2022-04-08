@@ -5,11 +5,14 @@ all:
         # pi1:
         #   ansible_host: 192.168.100.117
         #   ansible_user: ubuntu
-        pi2_SSD:
+        pi2:
           ansible_host: 192.168.100.118
           ansible_user: ubuntu
-        # pi3:
+        # pi2_SSD:
         #   ansible_host: 192.168.100.119
+        #   ansible_user: ubuntu
+        # pi3:
+        #   ansible_host: 192.168.100.122
         #   ansible_user: ubuntu
         # pi2:
         #   ansible_host: 192.168.100.54

@@ -1,5 +1,6 @@
-- hosts: all
+- hosts: webservers
   become: yes
+  become_user: deploy
   vars:
     server_name: "{{ ansible_default_ipv4.address }}"
     document_root: /home/www/
