@@ -1,1 +1,20 @@
-- import_playbook: secure/main.yml
+- name: Secure the hosts
+  hosts: all
+  become: true
+  tasks:
+    # You need sshpass installed for this to work as it will prompt for a password
+    - name: Deploy SSH Public Keys
+      ansible.posix.authorized_key:
+        user: ubuntu
+        state: present
+        key: "{{ lookup('file', lookup('env','HOME') + '/.ssh/id_rsa.pub') }}"
+
+    - name: Disable password based authentication
+      lineinfile: dest=/etc/ssh/sshd_config regexp="^PasswordAuthentication" line="PasswordAuthentication no" state=present
+      notify:
+        - restart sshd
+  handlers:
+  - name: restart sshd
+    service:
+      name: sshd
+      state: restarted

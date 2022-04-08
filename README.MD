@@ -40,9 +40,9 @@ ansible-playbook playbooks/secure.yml --check --ask-pass
 ### Dependencies
 
 #### User
-Create a user that will do deployment
+Create a user that will do deployment, after securing the server this is the first thing you should do as the app and it depencidens shoud be managed by app user so later on here are not permission issues.
 ```
-playbooks/dependencies/user/deploy.yml
+ansible-playbook playbooks/setup/user/deploy.yml
 ```
 
 ## Update
@@ -50,7 +50,7 @@ playbooks/dependencies/user/deploy.yml
 To update all hosts
 
 ```
-ansible-playbook playbooks/update/run.yml
+ansible-playbook playbooks/update.yml
 ```
 
 ## Shutdown
