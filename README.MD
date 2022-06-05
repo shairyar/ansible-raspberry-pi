@@ -41,9 +41,14 @@ ansible-playbook playbooks/secure.yml --check --ask-pass
 ### Dependencies
 
 #### User
-Create a user that will do deployment, after securing the server this is the first thing you should do as the app and it depencidens shoud be managed by app user so later on here are not permission issues.
+Create a user that will do deployment, after securing the server this is the first thing you should do as the app and it depencidens shoud be managed by app user so later on there are not permission issues.
 ```
-ansible-playbook playbooks/setup/user/deploy.yml
+ansible-playbook playbooks/setup/user/add.yml
+```
+
+In case you need to remove a user at any point, run the following playbook.
+```
+ansible-playbook playbooks/setup/user/remove.yml
 ```
 
 ## Update
