@@ -12,8 +12,6 @@
 
 # Commands
 
-## Ping
-`ansible -m ping all`
 ## Dry run
 Dry run any playbook with the `--check` flag for example `ansible-playbook playbooks/secure.yml --check`
 
@@ -36,6 +34,9 @@ ansible-playbook playbooks/secure.yml --check --ask-pass
 ```
 
 `--ask-pass` will ask for a password, enter the password of a system you are SSHing into.
+
+### Ping
+`ansible -m ping all`
 
 ### Dependencies
 
