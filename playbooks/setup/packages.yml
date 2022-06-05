@@ -25,4 +25,4 @@
         - Enable Postgresql
 
   handlers:
-      - include: ../shared/handlers/main.yml
+      - import_tasks: ../shared/handlers/main.yml

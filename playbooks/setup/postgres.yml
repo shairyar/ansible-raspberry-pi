@@ -3,7 +3,7 @@
   vars_files:
     - ../../etc/ansible/vars.yml
   handlers:
-    - include: ../shared/handlers/main.yml
+    - import_tasks: ../shared/handlers/main.yml
         
   tasks:
     - name: Ensure PostgreSQL is listening on *
