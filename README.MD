@@ -9,22 +9,6 @@
 * `inventory.yml` contains the group of hosts.
 * Directory `playbooks` contains all playbooks. `main.yml` imports other playbook.
 
-
-# Commands
-
-## Dry run
-Dry run any playbook with the `--check` flag for example `ansible-playbook playbooks/secure.yml --check`
-
-## Display inventory
-`ansible-inventory --list`
-
-### All hosts
-`ansible -m ping all -i inventory.yml` or `ansible -m ping all`
-
-### Webservers
-
-`ansible -m ping webservers -i inventory.yml` or `ansible -m ping webservers`
-
 ## Playbooks
 
 ### Secure the Raspberry pi
@@ -35,11 +19,10 @@ ansible-playbook playbooks/secure.yml --check --ask-pass
 
 `--ask-pass` will ask for a password, enter the password of a system you are SSHing into.
 
-### Ping
-`ansible -m ping all`
-
 ### Dependencies
 
+#### Variables
+Rename the file `etc/ansible/vars.example.yml` to `etc/ansible/vars.yml` and setup the values.
 #### User
 Create a user that will do deployment, after securing the server this is the first thing you should do as the app and it depencidens shoud be managed by app user so later on there are not permission issues.
 ```
@@ -51,6 +34,19 @@ In case you need to remove a user at any point, run the following playbook.
 ansible-playbook playbooks/setup/user/remove.yml
 ```
 
+# Commands
+
+## Dry run
+Dry run any playbook with the `--check` flag for example
+
+```
+ansible-playbook playbooks/secure.yml --check
+```
+
+## Display inventory
+```
+ansible-inventory --list
+```
 ## Update
 
 To update all hosts
@@ -65,6 +61,29 @@ To shutdown all hosts
 
 ```
 ansible-playbook playbooks/shutdown/run.yml
+```
+
+## Ping
+
+### All hosts
+```
+ansible -m ping all -i inventory.yml
+```
+
+or
+
+```
+ansible -m ping all
+```
+
+### Webservers
+
+```
+ansible -m ping webservers -i inventory.yml
+```
+or
+```
+ansible -m ping webservers
 ```
 
 ### ToDo
