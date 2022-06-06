@@ -2,29 +2,10 @@
   become: yes
   vars_files:
     - ../../etc/ansible/vars.yml
+  handlers:
+    - import_tasks: ../shared/handlers/main.yml
+        
   tasks:
-    - name: Install Ruby dependencies
-      apt:
-        name: "{{ item }}"
-      with_items:
-        - gcc
-        - autoconf
-        - bison
-        - build-essential
-        - libssl-dev
-        - libyaml-dev
-        - libreadline6-dev
-        - zlib1g-dev
-        - libncurses5-dev
-        - libffi-dev
-        - nodejs
-        - wget
-        - python3-psycopg2
-        - acl
-        - postgresql
-        - libpq-dev
-      notify:
-        - Enable Postgresql
     - name: Ensure PostgreSQL is listening on *
       lineinfile:
         dest: /etc/postgresql/13/main/postgresql.conf
@@ -46,6 +27,7 @@
       args:
         warn: no
       notify: Restart Postgresql
+
     - name: Create a Superuser PostgreSQL database user
       become_user: postgres
       postgresql_user:
@@ -54,29 +36,11 @@
         role_attr_flags: CREATEDB,SUPERUSER,CREATEROLE
         encrypted: yes
         state: present
+
     - name: "Create app database"
       postgresql_db:
         state: present
         name: "{{ db_staging_name }}"
       become: yes
       become_user: postgres
-  handlers:
-    - name: Restart Postgresql
-      systemd:
-        name: postgresql
-        state: restarted
 
-    - name: Start Postgresql
-      systemd:
-        name: postgresql
-        state: started
-
-    - name: Stop Postgresql
-      systemd:
-        name: postgresql
-        state: stopped
-
-    - name: Enable Postgresql
-      systemd:
-        name: postgresql
-        enabled: yes

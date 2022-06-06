@@ -1,0 +1,16 @@
+- name: Install rvm and ruby
+  hosts: all
+  # For this play book to work you need to install https://github.com/rvm/rvm1-ansible
+  # For now install ruby manually because Ubuntu 22.04 comes with OpenSSL 3.0 
+  # and to install ruby version less than 3.1.0 you still need to use openssl 1.1.1
+  # $ rvm pkg install openssl
+  # $ rvm install ruby-2.5.3 --with-openssl-dir=$HOME/.rvm/usr
+  # For more details visit
+  # 1. https://github.com/rvm/rvm/issues/5209#issuecomment-1140506763
+  # 2. https://github.com/rvm/ubuntu_rvm/issues/67#issuecomment-1134926894
+
+  roles:
+    - { role: rvm.ruby,
+        tags: ruby,
+        rvm1_rubies: ['ruby-2.5.3'],
+      }

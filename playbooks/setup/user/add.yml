@@ -1,11 +1,14 @@
 - hosts: all
   become: yes
+  vars_files:
+    - ../../../etc/ansible/vars.yml
   tasks:
-    - name: Add deploy user
-      user:
+    - name: Add the user 'deploy' with a bash shell, appending the group 'deploy'
+      ansible.builtin.user:
         name: deploy
         shell: /bin/bash
-        # group: sudo
+        password: '{{ deploy_user_password }}'  
+    
     # You need sshpass installed for this to work as it will prompt for a password
     - name: Add SSH key to server for deploy user
       ansible.posix.authorized_key:

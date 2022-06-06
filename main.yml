@@ -1,2 +1,0 @@
-# - import_playbook: playbooks/ping.yml
-# - import_playbook: playbooks/update.yml

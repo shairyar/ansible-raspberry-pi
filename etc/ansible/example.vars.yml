@@ -1,0 +1,5 @@
+db_user: YOUR-DB-USER
+db_password: YOUR-DB-PASSWORD
+db_staging_name: STAGING-DB-NAME
+db_production_name: PRODUCTS-DB-NAME
+deploy_user_password: "{{ 'USER-PASSWORD' | password_hash('sha512') }}"

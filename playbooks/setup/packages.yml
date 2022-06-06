@@ -1,0 +1,37 @@
+- hosts: all
+  become: yes
+  tasks:
+    - name: Install Ruby dependencies
+      apt:
+        name: "{{ item }}"
+      with_items:
+
+        - acl
+        - autoconf
+        - automake
+        - bison
+        - build-essential
+        - curl
+        - gcc
+        - g++
+        - libc6-dev
+        - libgdbm-dev
+        - libffi-dev
+        - libgmp-dev        
+        - libncurses5-dev
+        - libpq-dev
+        - libreadline6-dev
+        - libssl-dev
+        - libtool        
+        - libyaml-dev
+        - make
+        - nodejs
+        - pkg-config        
+        - postgresql
+        - wget
+        - zlib1g-dev
+      notify:
+        - Enable Postgresql
+
+  handlers:
+      - import_tasks: ../shared/handlers/main.yml

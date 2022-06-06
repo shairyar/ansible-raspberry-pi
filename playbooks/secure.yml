@@ -15,7 +15,4 @@
         - restart sshd
 
   handlers:
-  - name: restart sshd
-    service:
-      name: sshd
-      state: restarted
+      - import_tasks: shared/handlers/main.yml

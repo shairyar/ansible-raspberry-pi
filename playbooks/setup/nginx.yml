@@ -1,0 +1,25 @@
+- hosts: all
+  tasks:
+    - name: Upload nginx config
+      copy:
+        src: ../../files/nginx_config
+        dest: /etc/nginx/sites-available/todo
+    - name: Disable default nginx config
+      file:
+        path: /etc/nginx/sites-enabled/default
+        state: absent
+      notify:
+        - Restart nginx
+    - name: Enable nginx config
+      file:
+        src: /etc/nginx/sites-available/todo
+        dest: /etc/nginx/sites-enabled/todo
+        state: link
+      notify:
+        - Restart nginx
+    - name: Ensure apt-transport-https is installed
+      apt:
+        name: apt-transport-https
+  handlers:
+    - name: Restart nginx
+      service: name=nginx state=restarted
