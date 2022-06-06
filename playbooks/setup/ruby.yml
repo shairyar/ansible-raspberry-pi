@@ -1,91 +1,16 @@
-- hosts: all
-  become_user: deploy
-  tasks:
-    - name: Download ruby-install
-      become: yes
-      get_url:
-        url: https://github.com/postmodern/ruby-install/archive/v0.8.3.tar.gz
-        dest: /home/deploy/ruby-install-0.8.3.tar.gz
-    - name: Extract ruby install tarball                                                                                                                                                
-      become: yes
-      unarchive:
-        src: /home/deploy/ruby-install-0.8.3.tar.gz
-        dest: /home/deploy
-        creates: /home/deploy/ruby-install-0.8.3
-        remote_src: yes
-    - name: Install ruby-install
-      become: yes
-      make:
-        chdir: /home/deploy/ruby-install-0.8.3
-        target: install
-    - name: Install Ruby
-      become_user: deploy
-      command: /usr/local/bin/ruby-install --no-install-deps ruby 3.1.0
-      args:
-        creates: /home/deploy/.rubies/ruby-3.1.0
-    - name: Download chruby
-      become: yes
-      get_url:
-        url: https://github.com/postmodern/chruby/archive/v0.3.9.tar.gz
-        dest: /home/deploy/chruby-0.3.9.tar.gz
-    - name: Extract chruby tarball
-      # become: no
-      unarchive:
-        src: /home/deploy/chruby-0.3.9.tar.gz
-        dest: /home/deploy
-        creates: /home/deploy/chruby-0.3.9
-        remote_src: yes
-    - name: Install chruby
-      make:
-        chdir: /home/deploy/chruby-0.3.9
-        target: install
-    - name: Load chruby for deploy user
-      lineinfile:
-        path: /home/deploy/.bashrc
-        regexp: 'chruby.sh$'
-        line: 'source /usr/local/share/chruby/chruby.sh'
-        insertbefore: BOF
-    - name: Set ruby version for deploy user
-      lineinfile:
-        path: /home/deploy/.profile
-        regexp: '^chruby'
-        line: 'chruby ruby-3.1.0'
-    - name: Install bundler
-      become_user: deploy
-      command: 'chruby-exec ruby-3.1.0 -- gem install bundler'
-      args:
-        creates: /home/deploy/.gem/ruby/3.1.0/bin/bundle
-    - name: Upload nginx config
-      copy:
-        src: ../../files/nginx_config
-        dest: /etc/nginx/sites-available/todo
-    - name: Disable default nginx config
-      become_user: deploy
-      file:
-        path: /etc/nginx/sites-enabled/default
-        state: absent
-      notify:
-        - Restart nginx
-    - name: Enable nginx config
-      file:
-        src: /etc/nginx/sites-available/todo
-        dest: /etc/nginx/sites-enabled/todo
-        state: link
-      notify:
-        - Restart nginx
-    - name: Ensure apt-transport-https is installed
-      apt:
-        name: apt-transport-https
-    - name: Add Yarn apt key
-      apt_key:
-        url: https://dl.yarnpkg.com/debian/pubkey.gpg
-    - name: Add Yarn repository
-      apt_repository:
-        repo: "deb https://dl.yarnpkg.com/debian/ stable main"
-        filename: yarn
-    - name: Install Yarn
-      apt:
-        name: yarn
-  handlers:
-    - name: Restart nginx
-      service: name=nginx state=restarted
+- name: Install rvm and ruby
+  hosts: all
+  # For this play book to work you need to install https://github.com/rvm/rvm1-ansible
+  # For now install ruby manually because Ubuntu 22.04 comes with OpenSSL 3.0 
+  # and to install ruby version less than 3.1.0 you still need to use openssl 1.1.1
+  # $ rvm pkg install openssl
+  # $ rvm install ruby-2.5.3 --with-openssl-dir=$HOME/.rvm/usr
+  # For more details visit
+  # 1. https://github.com/rvm/rvm/issues/5209#issuecomment-1140506763
+  # 2. https://github.com/rvm/ubuntu_rvm/issues/67#issuecomment-1134926894
+
+  roles:
+    - { role: rvm.ruby,
+        tags: ruby,
+        rvm1_rubies: ['ruby-2.5.3'],
+      }

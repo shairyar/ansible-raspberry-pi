@@ -31,9 +31,13 @@ ansible-playbook playbooks/setup/user/add.yml
 
 In case you need to remove a user at any point, run the following playbook.
 ```
-ansible-playbook playbooks/setup/user/remove.yml
+ansible-playbook playbooks/setup/packages.yml
 ```
 
+#### Install ruby dependencies
+```
+ansible-playbook playbooks/setup/user/remove.yml
+```
 # Commands
 
 ## Dry run
@@ -99,5 +103,6 @@ ansible -m ping webservers
 - [ ] Implement collections
 - [ ] Shutdown specific host
 - [ ] Deployment
-  - [x] Deploy user
+  - [x] Add deploy user
+  - [x] Remove deploy user
   - [ ] Dependencies

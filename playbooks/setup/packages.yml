@@ -5,22 +5,31 @@
       apt:
         name: "{{ item }}"
       with_items:
-        - gcc
+
+        - acl
         - autoconf
+        - automake
         - bison
         - build-essential
-        - libssl-dev
-        - libyaml-dev
-        - libreadline6-dev
-        - zlib1g-dev
-        - libncurses5-dev
+        - curl
+        - gcc
+        - g++
+        - libc6-dev
+        - libgdbm-dev
         - libffi-dev
-        - nodejs
-        - wget
-        - python3-psycopg2
-        - acl
-        - postgresql
+        - libgmp-dev        
+        - libncurses5-dev
         - libpq-dev
+        - libreadline6-dev
+        - libssl-dev
+        - libtool        
+        - libyaml-dev
+        - make
+        - nodejs
+        - pkg-config        
+        - postgresql
+        - wget
+        - zlib1g-dev
       notify:
         - Enable Postgresql
 
